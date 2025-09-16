@@ -298,12 +298,12 @@ function(createExportTestHeaders)
   endforeach()
   list(REMOVE_DUPLICATES exportLibs)
   list(SORT exportLibs)
-  set(exportPath "Code/RDGeneral/export.h")
+  set(exportPath "export.h")
   file(WRITE "${CMAKE_BINARY_DIR}/${exportPath}.tmp"
     "// auto-generated export definition header\n"
     "#pragma once\n"
     "#include <RDGeneral/RDExportMacros.h>\n")
-  set(testPath "Code/RDGeneral/test.h")
+  set(testPath "test.h")
   file(WRITE "${CMAKE_BINARY_DIR}/${testPath}.tmp"
     "// auto-generated header to be imported in all cpp tests\n"
     "#pragma once\n")
