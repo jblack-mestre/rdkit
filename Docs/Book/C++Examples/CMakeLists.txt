@@ -26,7 +26,7 @@ set(RDKit_LIBS RDKitChemReactions RDKitFileParsers RDKitSmilesParse RDKitDepicto
   	       RDKitMolAlign RDKitOptimizer RDKitForceField RDKitForceFieldHelpers
 	       RDKitAlignment RDKitForceField  RDKitMolTransforms RDKitEigenSolvers )
 
-set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR})
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR})
 
 find_package (Threads)
 set(RDKit_THREAD_LIBS Threads::Threads)

@@ -45,7 +45,7 @@
 FIND_PROGRAM( GCOV_PATH gcov )
 FIND_PROGRAM( LCOV_PATH lcov )
 FIND_PROGRAM( GENHTML_PATH genhtml )
-FIND_PROGRAM( GCOVR_PATH gcovr PATHS ${CMAKE_SOURCE_DIR}/tests)
+FIND_PROGRAM( GCOVR_PATH gcovr PATHS ${CMAKE_CURRENT_SOURCE_DIR}/tests)
 
 IF(NOT GCOV_PATH)
 	MESSAGE(FATAL_ERROR "gcov not found! Aborting...")
@@ -106,7 +106,7 @@ FUNCTION(SETUP_TARGET_FOR_COVERAGE _targetname _testrunner _outputname)
 		MESSAGE(FATAL_ERROR "genhtml not found! Aborting...")
 	ENDIF() # NOT GENHTML_PATH
 
-	SET(IN_TREE_FILE_FIXUP "${CMAKE_SOURCE_DIR}/CMakeModules/in_tree_file_fixup.py")
+	SET(IN_TREE_FILE_FIXUP "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules/in_tree_file_fixup.py")
 
 	# Setup target
 	ADD_CUSTOM_TARGET(${_targetname}
@@ -119,7 +119,7 @@ FUNCTION(SETUP_TARGET_FOR_COVERAGE _targetname _testrunner _outputname)
 		# Capturing lcov counters and generating report
 		COMMAND ${LCOV_PATH} --directory . --capture --output-file ${_outputname}.info
 		COMMAND ${LCOV_PATH} --remove ${_outputname}.info 'tests/*' '/usr/*' '*.ll' '*.yy' --output-file ${_outputname}.info.cleaned
-                COMMAND ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/Code/cmake/Modules/fixup_coverage.py ${CMAKE_SOURCE_DIR} ${_outputname}.info.cleaned
+                COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/Code/cmake/Modules/fixup_coverage.py ${CMAKE_CURRENT_SOURCE_DIR} ${_outputname}.info.cleaned
 
 		COMMAND ${GENHTML_PATH} -o ${_outputname} ${_outputname}.info.cleaned
 		COMMAND ${CMAKE_COMMAND} -E remove ${_outputname}.info ${_outputname}.info.cleaned
@@ -157,7 +157,7 @@ FUNCTION(SETUP_TARGET_FOR_COVERAGE_COBERTURA _targetname _testrunner _outputname
 		${_testrunner} ${ARGV3}
 
 		# Running gcovr
-		COMMAND ${GCOVR_PATH} -x -r ${CMAKE_SOURCE_DIR} -e '${CMAKE_SOURCE_DIR}/tests/'  -o ${_outputname}.xml
+		COMMAND ${GCOVR_PATH} -x -r ${CMAKE_CURRENT_SOURCE_DIR} -e '${CMAKE_CURRENT_SOURCE_DIR}/tests/'  -o ${_outputname}.xml
 		WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
 		COMMENT "Running gcovr to produce Cobertura code coverage report."
 	)
